@@ -306,11 +306,11 @@ your system and configuration.
 
 name=`uname -n`
 if [ $name == "keithw-W2600CR" ]; then
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:03:00.0 -b 0000:03:00.1 -- -p 0x00c -P -m "[1:3].0, [2:4].1" 
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:03:00.0 -b 0000:03:00.1 -- -p 0x00c -P -m "[1:3].0, [2:4].1" 
 fi
 
 if [ $name == "keithw-S5520HC" ]; then
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:01:00.0 -b 0000:01:00.1 -- -p 0x03 -P -m "[1:3].0, [2:4].1" 
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:01:00.0 -b 0000:01:00.1 -- -p 0x03 -P -m "[1:3].0, [2:4].1" 
 fi
 ```
 ** Note: The '-m NNN' in the DPDK arguments is to have DPDK allocate 512 megs of memory.
@@ -346,7 +346,7 @@ single physical core will be trying to do both Rx/Tx functions.
 The '-n 2' is a required argument for DPDK and denotes the number of memory channels.
 
 ```
-Usage: ./app/pktgen -c COREMASK -n NUM [-m NB] [-r NUM] [-b <domain:bus:devid.func>][--proc-type primary|secondary|auto]
+Usage: ./app/build/pktgen -c COREMASK -n NUM [-m NB] [-r NUM] [-b <domain:bus:devid.func>][--proc-type primary|secondary|auto]
 
 EAL options:                                                                                                                        
   -c COREMASK  : A hexadecimal bitmask of cores to run on                                                                           
@@ -386,7 +386,7 @@ EAL options for DEBUG use only:
 
 ===== Application Usage =====
 
-Usage: ./app/pktgen [EAL options] -- -p PORTMASK [-h] [-P] [-G] [-f cmd_file] [-l log_file] [-s P:PCAP_file] [-m <string>]
+Usage: ./app/build/pktgen [EAL options] -- -p PORTMASK [-h] [-P] [-G] [-f cmd_file] [-l log_file] [-s P:PCAP_file] [-m <string>]
   -p PORTMASK  hexadecimal bitmask of ports to configure
   -s P:file    PCAP packet stream file, 'P' is the port number
   -f filename  Command file (.pkt) to execute or a Lua script (.lua) file
@@ -447,11 +447,11 @@ allows the developer to share ports on the same machine.
 
 name=`uname -n`
 if [ $name == "keithw-W2600CR" ]; then
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:03:00.0 -b 0000:03:00.1 -- -p 0x00c -P -m "[1:3].0, [2:4].1" 
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:03:00.0 -b 0000:03:00.1 -- -p 0x00c -P -m "[1:3].0, [2:4].1" 
 fi
 
 if [ $name == "keithw-S5520HC" ]; then
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:01:00.0 -b 0000:01:00.1 -- -p 0x03 -P -m "[1:3].0, [2:4].1" 
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 256,256 --file-prefix pg -b 0000:01:00.0 -b 0000:01:00.1 -- -p 0x03 -P -m "[1:3].0, [2:4].1" 
 fi
 ```
 ------------- doit script ----------------
@@ -1113,11 +1113,11 @@ pktgen> quit
 ------------------------------------------------------------------------------------------
 -- Example command lines.
 ```
-./app/pktgen -c 1ff -n 3 --proc-type auto --socket-mem 256,256 -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/large.pcap
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/test1.pcap -s 1:pcap/large.pcap
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/test1.pcap -s 1:pcap/large.pcap
-./app/pktgen -c e -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x14 -P -m "2.0, 3.1"
-./app/pktgen -c 1ff -n 3 --proc-type auto --socket-mem 256,256 -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3"
+./app/build/pktgen -c 1ff -n 3 --proc-type auto --socket-mem 256,256 -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/large.pcap
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/test1.pcap -s 1:pcap/large.pcap
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3" -s 0:pcap/test1.pcap -s 1:pcap/large.pcap
+./app/build/pktgen -c e -n 3 --proc-type auto --socket-mem 128,128 --file-prefix pg -- -p 0x14 -P -m "2.0, 3.1"
+./app/build/pktgen -c 1ff -n 3 --proc-type auto --socket-mem 256,256 -- -p 0x3c -P -m "[1:3].0, [2:4].1, [5:7].2, [6:8].3"
 ```
 
 A command line passing in a pktgen/test/set_seq.pkt file to help initialize pktgen with some
@@ -1125,7 +1125,7 @@ default values and configurations. You can also replace the filename using the '
 with a Lua script file ending in .lua instead of .pkt. BTW, if the filename ends in anything
 other then .lua it is treated as a .pkt file.
  
-`./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 -- -p 0x30 -P -m "[1:3].0, [2:4].1" -f test/set_seq.pkt`
+`./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 -- -p 0x30 -P -m "[1:3].0, [2:4].1" -f test/set_seq.pkt`
 
 -- test/set_seq.pkt
 ```
@@ -1140,7 +1140,7 @@ The Lua version is easier to remember the layout of the agruments if you want to
 use that one instead of set_seq.pkt file.
 
 ```
-./app/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 -- -p 0x30 -P -m "[1:3].0, [2:4].1" -f test/set_seq.lua`
+./app/build/pktgen -c 1f -n 3 --proc-type auto --socket-mem 128,128 -- -p 0x30 -P -m "[1:3].0, [2:4].1" -f test/set_seq.lua`
 
 -- The '--' is a comment in Lua
 local seq_table = {			-- entries can be in any order
